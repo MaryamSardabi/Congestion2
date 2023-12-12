@@ -42,7 +42,7 @@ namespace Congestion.Infrastructure.Configuration
                 new Calender() {Id = 4, Date = new DateTime(2013, 01, 04), IsHoliday = false, IsTollExempDay = false },
                 new Calender() {Id = 5, Date = new DateTime(2013, 01, 05), IsHoliday = false, IsTollExempDay = false },
                 new Calender() {Id = 6, Date = new DateTime(2013, 01, 06), IsHoliday = false, IsTollExempDay = false },
-                new Calender() {Id = 1, Date = new DateTime(2013, 01, 07), IsHoliday = false, IsTollExempDay = false });
+                new Calender() {Id = 7, Date = new DateTime(2013, 01, 07), IsHoliday = false, IsTollExempDay = false });
 
             modelBuilder.Entity<Car>().HasData(
                new Car("No1111", "Emergency vehicles", true),
@@ -51,6 +51,8 @@ namespace Congestion.Infrastructure.Configuration
                new Car("No1111", "Busses", true),
                new Car("No2222", "Military vehicles", true),
                new Car("No3333", "Foreign vehicles", true));
+
+           
 
 
         }
