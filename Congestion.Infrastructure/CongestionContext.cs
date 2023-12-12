@@ -22,7 +22,7 @@ namespace Congestion.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            modelBuilder.ApplyConfiguration(new SeedingEntryConfiguration());
+          
 
         }
     }

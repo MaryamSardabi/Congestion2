@@ -10,6 +10,7 @@ namespace Congestion.Infrastructure.Configuration
         {
             builder.ToTable(nameof(Calender));
             builder.HasKey(x => x.Id);
+            
         }       
     }
 }
