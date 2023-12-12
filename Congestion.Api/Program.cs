@@ -12,7 +12,8 @@ builder.Services.AddDbContext<CongestionContext>(options =>
 
 });
 
-var app = builder.Build();
+
+WebApplication? app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
@@ -22,4 +23,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.SeedDatabase();
 app.Run();
+
+
+

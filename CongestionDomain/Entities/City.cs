@@ -16,21 +16,21 @@ namespace CongestionDomain.Entities
         {
 
         }
-        public City( string name)
+        public City(string name)
         {
             Name = name;
             Congestions = new List<CongestionPlace>();
             TimeTolls = new List<TimeToll>();
         }
-        public void AddCongestion( string name)
+        public void AddCongestion(string name)
         {
-            var congestion = new CongestionPlace(name);
+            var congestion = new CongestionPlace(name, this);
             Congestions.Add(congestion);
         }
 
         public void AddTimeToll(City city, TimeSpan startTime, TimeSpan endTime, decimal tollAmount)
         {
-            var timeToll = new TimeToll(city,startTime, endTime, tollAmount);
+            var timeToll = new TimeToll(city, startTime, endTime, tollAmount);
             TimeTolls.Add(timeToll);
         }
 
