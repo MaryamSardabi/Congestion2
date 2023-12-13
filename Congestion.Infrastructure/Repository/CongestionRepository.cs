@@ -7,55 +7,52 @@ namespace Congestion.Infrastructure.Repository
     public class CongestionRepository : ICongestionRepository
     {
         private readonly CongestionContext _context;
-        private readonly IMapper _mapper;
-        public CongestionRepository(CongestionContext context, IMapper mapper)
+        public CongestionRepository(CongestionContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
-        public async Task<List<Car>> GetCarsAsync()
+        public async Task<CarType> GetCarTypeById(int carTypeId)
         {
-            var dbCars = await _context.Cars.AsNoTracking().ToListAsync();
-            var cars = _mapper.Map<List<Car>>(dbCars);
-            return cars;
+            return await _context.CarTypes.Where(x => x.Id == carTypeId).FirstOrDefaultAsync();
+        }
+
+        public async Task AddCar(Car car)
+        {
+            _context.Cars.Add(car);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<City> GetCityById(int cityId)
+        {
+            return await _context.Cities.Where(x => x.Id == cityId).FirstOrDefaultAsync();
 
         }
 
-        public async Task<Car> GetCarByNoAsync(string tag)
+        public async Task<CongestionPlace> GetCongestionPlace(int cityId, int congestionPlaceId)
         {
-            var DbCar = await _context.Cars.Where(x => x.Tag == tag).SingleOrDefaultAsync();
-            var car = _mapper.Map<Car>(DbCar);
-            return car;
-
+            return await _context.CongestionPlaces.Where(x => x.CityId == cityId && x.Id == congestionPlaceId).FirstOrDefaultAsync();
         }
 
-        public async Task<List<TimeToll>> GetTimeTollsAsync()
+        public async Task<Calender> GetCalenderDate(DateTime calenderDate)
         {
-            var dbTimeTolls = await _context.TimeTolls.AsNoTracking().ToListAsync();
-            var timeTolls = _mapper.Map<List<TimeToll>>(dbTimeTolls);
-            return timeTolls;
+            return await _context.Calenders.Where(x => x.Date == calenderDate).SingleOrDefaultAsync();
         }
 
-        public async Task<TimeToll> GetTimeTollByTimeAsync(TimeSpan timeSpan)
+        public async Task<TimeToll> GetTimeToll(TimeSpan timeSpan)
         {
-            var dbTimeToll = await _context.TimeTolls.Where(x => x.StartTime < timeSpan && x.EndTime > timeSpan).SingleOrDefaultAsync();
-            var timeToll = _mapper.Map<TimeToll>(dbTimeToll);
-            return timeToll;
+            return await _context.TimeTolls.Where(x => x.StartTime > timeSpan && x.EndTime < timeSpan).FirstOrDefaultAsync();
         }
 
-        public async Task<City> GetCityByNameAsync(string name)
+        public async Task<Car> GetCarByTagAsync(string tag)
         {
-            var dbCity = await _context.Cities.Where(x => x.Name == name).SingleOrDefaultAsync();
-            var city = _mapper.Map<City>(dbCity);
-            return city;
+            return await _context.Cars.Where(x => x.Tag == tag).FirstOrDefaultAsync();
         }
 
-        public async Task<CongestionPlace> GetCongestionPlaceByNameAsync(string name)
+        public async Task AddTollRegistrationAsync(TollRegistration tollRegistration)
         {
-            var dbCongestionPlace = await _context.CongestionPlaces.Where(x => x.Name == name).SingleOrDefaultAsync();
-            var congestionPlace = _mapper.Map<CongestionPlace>(dbCongestionPlace);
-            return congestionPlace;
+            _context.TollRegistrations.Add(tollRegistration);
+            await _context.SaveChangesAsync();
         }
     }
 }

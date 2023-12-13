@@ -7,6 +7,9 @@ namespace CongestionDomain.Entities
     {
         public int Id { get; private set; }
         public int VehicleId { get; private set; }
+        public decimal TotalTollAmount { get; private set; }
+        public decimal PaidTollAmount { get; private set; }
+        public DateTime RegistrationDateTime{ get; set; }
 
         [NotMapped]
         public Vehicle Vehicle { get; private set; }
@@ -16,14 +19,12 @@ namespace CongestionDomain.Entities
         public CongestionPlace CongestionPlace { get; private set; }
         public int CalenderId { get;private set; }
         public Calender Calender { get; private set; }
-        public decimal TotalTollAmount { get; private set; }
-        public decimal PaidTollAmount { get; private set; }
         protected TollRegistration()
         {
 
         }
 
-        public TollRegistration(Vehicle vehicle, TimeToll timeToll, CongestionPlace congestionPlace, Calender calender, decimal totalTollAmount, decimal paidTollAmount)
+        public TollRegistration(Vehicle vehicle, TimeToll timeToll, CongestionPlace congestionPlace, Calender calender, decimal totalTollAmount, decimal paidTollAmount, DateTime registrationDateTime)
         {
             Vehicle = vehicle;
             TimeToll = timeToll;
@@ -31,6 +32,7 @@ namespace CongestionDomain.Entities
             Calender = calender;
             TotalTollAmount = totalTollAmount;
             PaidTollAmount = paidTollAmount;
+            RegistrationDateTime = registrationDateTime; 
         }
     }
 

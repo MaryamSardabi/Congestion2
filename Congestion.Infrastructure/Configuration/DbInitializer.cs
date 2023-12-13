@@ -86,12 +86,12 @@ namespace Congestion.Infrastructure.Configuration
             {
                 dbContext.Cars.FromSqlRaw("SET IDENTITY_INSERT [dbo].[Car] ON");
                 dbContext.Cars.AddRange(
-               new Car("No1111", "Emergency vehicles", EmergencyVehicles),
-               new Car("No2222", "Diplomat vehicles", DiplomatVehicles),
-               new Car("No3333", "Motorcycles", Motorcycles),
-               new Car("No1111", "Busses", MilitaryVehicles),
-               new Car("No2222", "Military vehicles", Ordinary),
-               new Car("No3333", "Foreign vehicles", Ordinary));
+               new Car("No1111", EmergencyVehicles),
+               new Car("No2222", DiplomatVehicles),
+               new Car("No3333", Motorcycles),
+               new Car("No1111", MilitaryVehicles),
+               new Car("No2222", Ordinary),
+               new Car("No3333", Ordinary));
 
             }
 

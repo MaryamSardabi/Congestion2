@@ -9,7 +9,6 @@ namespace Congestion.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Car> builder)
         {
-
             builder.ToTable(nameof(Car));
             builder.HasKey(x => x.Id).HasName("CarId");
         }

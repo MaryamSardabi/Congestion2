@@ -6,8 +6,7 @@ namespace CongestionDomain.Entities
     {
         public override int Id { get; protected set; }
         public  string Tag { get; private set; }
-        public override string Name { get; protected set; }
-        public override CarType CarType { get; set; }
+                public override CarType CarType { get; set; }
        
 
         public List<TollRegistration> TollRegistrations { get; private set; }
@@ -15,10 +14,10 @@ namespace CongestionDomain.Entities
         protected Car() { }
 
 
-        public Car(string tag, string name,CarType car)
+        public Car(string tag, CarType carType)
         {
             Tag = tag;
-            Name = name;
+            CarType = carType;
             TollRegistrations = new List<TollRegistration>();
         }
 

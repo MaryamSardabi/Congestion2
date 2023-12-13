@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Congestion.Infrastructure\Congestion.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
