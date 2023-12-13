@@ -9,11 +9,7 @@ namespace Congestion.Application
 {
     public interface ITollRegistrationService
     {
-        Task AddTollRegistraion(int cityId, int congestionId, string tag, CancellationToken ct);
-        Task<TollRegistration> GetById(int tollRegistrationId, CancellationToken none);
-        //Task SaveCity(string name);
-        //Task AddCongestionPlace(int cityId, string congectionPlaceName);
-        //Task AddTimeToll(int cityId, TimeSpan startTime, TimeSpan endTime, decimal tollAmount);
+        Task AddTollRegistraion(int cityId, int congestionId, string tag, CancellationToken ct);      
 
     }
 }

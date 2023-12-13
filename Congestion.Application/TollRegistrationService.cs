@@ -21,14 +21,6 @@ namespace Congestion.Application
             await _repository.AddTollRegistrationAsync(tollRegistration);
         }
 
-        public Task<TollRegistration> GetById(int tollRegistrationId, CancellationToken none)
-        {
-            return _repository.GetById(tollRegistrationId, none);
-        }
-
-        //public Task AddTollRegistraion(int cityId, int congestionId, string tag)
-        //{
-        //    var car=_repository.
-        //}
+        
     }
 }
