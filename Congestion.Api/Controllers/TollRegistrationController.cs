@@ -20,5 +20,18 @@ namespace Congestion.Api.Controllers
             return Ok();
 
         }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetTollRegistration(int tollRegistrationId)
+        {
+            var item = await _tollRegistrationService.GetById(tollRegistrationId, CancellationToken.None);
+            return Ok(item);
+
+        }
+
+
+
     }
 }

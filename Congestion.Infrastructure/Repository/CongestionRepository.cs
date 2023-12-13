@@ -44,15 +44,20 @@ namespace Congestion.Infrastructure.Repository
             return await _context.TimeTolls.Where(x => x.StartTime > timeSpan && x.EndTime < timeSpan).FirstOrDefaultAsync();
         }
 
-        public async Task<Car> GetCarByTagAsync(string tag)
+        public async Task<Car?> GetCarByTagAsync(string tag)
         {
-            return await _context.Cars.Where(x => x.Tag == tag).FirstOrDefaultAsync();
+            return await _context.Cars.FirstOrDefaultAsync(x => x.Tag == tag);
         }
 
         public async Task AddTollRegistrationAsync(TollRegistration tollRegistration)
         {
             _context.TollRegistrations.Add(tollRegistration);
             await _context.SaveChangesAsync();
+        }
+
+        public Task<TollRegistration> GetById(int tollRegistrationId, CancellationToken cancellationToken)
+        {
+            return _context.TollRegistrations.FirstOrDefaultAsync(o => o.Id == tollRegistrationId, cancellationToken);
         }
     }
 }
