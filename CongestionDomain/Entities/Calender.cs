@@ -11,13 +11,13 @@ namespace CongestionDomain.Entities
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public bool IsHoliday { get; set; }
-        public bool IsTollExempDay { get; set; }
+        public bool IsTollFree { get; set; }
         public List<TollRegistration> TollRegistrations { get;  set; }
 
 
         public void MakeDayTollExempt()
         {
-            IsTollExempDay = true;
+            IsTollFree = true;
             TollRegistrations = new List<TollRegistration>();
         }
 

@@ -19,7 +19,7 @@ namespace Congestion.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsHoliday = table.Column<bool>(type: "bit", nullable: false),
-                    IsTollExempDay = table.Column<bool>(type: "bit", nullable: false)
+                    IsTollFree = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,18 +27,17 @@ namespace Congestion.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Car",
+                name: "CarTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Tag = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsTollIncluded = table.Column<bool>(type: "bit", nullable: false)
+                    IsTollFree = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("CarId", x => x.Id);
+                    table.PrimaryKey("PK_CarTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -55,12 +54,34 @@ namespace Congestion.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Car",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Tag = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CarTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("CarId", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Car_CarTypes_CarTypeId",
+                        column: x => x.CarTypeId,
+                        principalTable: "CarTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CongestionPlace",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CityId = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,7 +90,8 @@ namespace Congestion.Infrastructure.Migrations
                         name: "FK_CongestionPlace_City_CityId",
                         column: x => x.CityId,
                         principalTable: "City",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,7 +126,8 @@ namespace Congestion.Infrastructure.Migrations
                     TimeTollId = table.Column<int>(type: "int", nullable: false),
                     CongestionPlaceId = table.Column<int>(type: "int", nullable: false),
                     CalenderId = table.Column<int>(type: "int", nullable: false),
-                    TotalAmout = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalTollAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PaidTollAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CarId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -125,8 +148,7 @@ namespace Congestion.Infrastructure.Migrations
                         name: "FK_TollRegistration_CongestionPlace_CongestionPlaceId",
                         column: x => x.CongestionPlaceId,
                         principalTable: "CongestionPlace",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TollRegistration_TimeToll_TimeTollId",
                         column: x => x.TimeTollId,
@@ -134,6 +156,11 @@ namespace Congestion.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Car_CarTypeId",
+                table: "Car",
+                column: "CarTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CongestionPlace_CityId",
@@ -183,6 +210,9 @@ namespace Congestion.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "TimeToll");
+
+            migrationBuilder.DropTable(
+                name: "CarTypes");
 
             migrationBuilder.DropTable(
                 name: "City");

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Congestion.Infrastructure.Migrations
 {
     [DbContext(typeof(CongestionContext))]
-    [Migration("20231212125004_init-2")]
-    partial class init2
+    [Migration("20231213073404_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,7 @@ namespace Congestion.Infrastructure.Migrations
                     b.Property<bool>("IsHoliday")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsTollExempDay")
+                    b.Property<bool>("IsTollFree")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -55,8 +55,8 @@ namespace Congestion.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("IsTollIncluded")
-                        .HasColumnType("bit");
+                    b.Property<int>("CarTypeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -69,7 +69,29 @@ namespace Congestion.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("CarId");
 
+                    b.HasIndex("CarTypeId");
+
                     b.ToTable("Car", (string)null);
+                });
+
+            modelBuilder.Entity("CongestionDomain.Entities.CarType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsTollFree")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CarTypes");
                 });
 
             modelBuilder.Entity("CongestionDomain.Entities.City", b =>
@@ -97,7 +119,7 @@ namespace Congestion.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CityId")
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -155,10 +177,13 @@ namespace Congestion.Infrastructure.Migrations
                     b.Property<int>("CongestionPlaceId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("PaidTollAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("TimeTollId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("TotalAmout")
+                    b.Property<decimal>("TotalTollAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("VehicleId")
@@ -177,11 +202,26 @@ namespace Congestion.Infrastructure.Migrations
                     b.ToTable("TollRegistration", (string)null);
                 });
 
+            modelBuilder.Entity("CongestionDomain.Entities.Car", b =>
+                {
+                    b.HasOne("CongestionDomain.Entities.CarType", "CarType")
+                        .WithMany()
+                        .HasForeignKey("CarTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CarType");
+                });
+
             modelBuilder.Entity("CongestionDomain.Entities.CongestionPlace", b =>
                 {
-                    b.HasOne("CongestionDomain.Entities.City", null)
+                    b.HasOne("CongestionDomain.Entities.City", "City")
                         .WithMany("Congestions")
-                        .HasForeignKey("CityId");
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("CongestionDomain.Entities.TimeToll", b =>
@@ -210,7 +250,7 @@ namespace Congestion.Infrastructure.Migrations
                     b.HasOne("CongestionDomain.Entities.CongestionPlace", "CongestionPlace")
                         .WithMany("TollRegistrations")
                         .HasForeignKey("CongestionPlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CongestionDomain.Entities.TimeToll", "TimeToll")

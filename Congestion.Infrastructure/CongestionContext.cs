@@ -18,6 +18,8 @@ namespace Congestion.Infrastructure
         public DbSet<CongestionPlace> CongestionPlaces { get; set; }
         public DbSet<TimeToll> TimeTolls { get; set; }
         public DbSet<TollRegistration> TollRegistrations { get; set; }
+        public DbSet<CarType> CarTypes{ get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -10,8 +10,8 @@ namespace CongestionDomain.Contracts
     public abstract class Vehicle
     {
         public abstract int Id { get; protected set; }
-        public abstract string Name { get; protected set; }
-        public abstract bool IsTollIncluded { get; protected set; }
+        public abstract string Name { get; protected set; }       
+        public abstract CarType CarType { get; set; }
 
     }
 }

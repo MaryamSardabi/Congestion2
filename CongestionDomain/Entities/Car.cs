@@ -7,18 +7,18 @@ namespace CongestionDomain.Entities
         public override int Id { get; protected set; }
         public  string Tag { get; private set; }
         public override string Name { get; protected set; }
-        public override bool IsTollIncluded { get; protected set; }
+        public override CarType CarType { get; set; }
+       
 
         public List<TollRegistration> TollRegistrations { get; private set; }
 
         protected Car() { }
 
 
-        public Car(string tag, string name, bool isTollIncluded)
+        public Car(string tag, string name,CarType car)
         {
             Tag = tag;
             Name = name;
-            IsTollIncluded = isTollIncluded;
             TollRegistrations = new List<TollRegistration>();
         }
 

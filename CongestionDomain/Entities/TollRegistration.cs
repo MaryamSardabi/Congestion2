@@ -16,19 +16,21 @@ namespace CongestionDomain.Entities
         public CongestionPlace CongestionPlace { get; private set; }
         public int CalenderId { get;private set; }
         public Calender Calender { get; private set; }
-        public decimal TotalAmout { get; private set; }
+        public decimal TotalTollAmount { get; private set; }
+        public decimal PaidTollAmount { get; private set; }
         protected TollRegistration()
         {
 
         }
 
-        public TollRegistration(Vehicle vehicle, TimeToll timeToll, CongestionPlace congestionPlace, Calender calender, decimal totalAmout)
+        public TollRegistration(Vehicle vehicle, TimeToll timeToll, CongestionPlace congestionPlace, Calender calender, decimal totalTollAmount, decimal paidTollAmount)
         {
             Vehicle = vehicle;
             TimeToll = timeToll;
             CongestionPlace = congestionPlace;
             Calender = calender;
-            TotalAmout = totalAmout;
+            TotalTollAmount = totalTollAmount;
+            PaidTollAmount = paidTollAmount;
         }
     }
 

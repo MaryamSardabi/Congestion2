@@ -15,6 +15,7 @@ namespace Congestion.Infrastructure.Configuration
         {
             builder.ToTable(nameof(TollRegistration));
             builder.HasKey(x => x.Id);
+            
         }
     }
 }

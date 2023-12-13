@@ -15,6 +15,7 @@ namespace Congestion.Infrastructure.Configuration
         {
             builder.ToTable(nameof(CongestionPlace));
             builder.HasKey(x => x.Id);
+            builder.HasMany(h => h.TollRegistrations).WithOne(w => w.CongestionPlace).OnDelete(DeleteBehavior.NoAction);
         }
       
     }
