@@ -25,28 +25,29 @@ namespace Congestion.Infrastructure.Repository
 
         public async Task<City> GetCityById(int cityId)
         {
-            return await _context.Cities.FirstOrDefaultAsync(x => x.Id == cityId);
+            return await _context.Cities.SingleOrDefaultAsync(x => x.Id == cityId);
 
         }
 
         public async Task<CongestionPlace> GetCongestionPlace(int cityId, int congestionPlaceId)
         {
-            return await _context.CongestionPlaces.FirstOrDefaultAsync(x => x.CityId == cityId && x.Id == congestionPlaceId);
+            return await _context.CongestionPlaces.SingleOrDefaultAsync(x => x.CityId == cityId && x.Id == congestionPlaceId);
         }
 
         public async Task<Calender> GetCalenderDate(DateTime calenderDate)
         {
-            return await _context.Calenders.SingleOrDefaultAsync(x => x.Date == calenderDate.Date);
+            return await _context.Calenders.SingleOrDefaultAsync(x => x.Date.Date == calenderDate.Date);
+    
         }
 
         public async Task<TimeToll> GetTimeToll(TimeSpan timeSpan)
         {
-            return await _context.TimeTolls.FirstOrDefaultAsync(x => x.StartTime > timeSpan && x.EndTime < timeSpan);
+            return await _context.TimeTolls.FirstOrDefaultAsync(x => x.StartTime < timeSpan && x.EndTime > timeSpan);
         }
 
         public async Task<Car?> GetCarByTagAsync(string tag)
         {
-            return await _context.Cars.FirstOrDefaultAsync(x => x.Tag == tag);
+            return await _context.Cars.Include(c=>c.CarType).SingleOrDefaultAsync(x => x.Tag == tag);
         }
 
         public async Task AddTollRegistrationAsync(TollRegistration tollRegistration)
@@ -57,7 +58,7 @@ namespace Congestion.Infrastructure.Repository
 
         public async Task<TollRegistration> GetLastTollRegistrationAsync(int carId)
         {
-            return await _context.TollRegistrations.Where(x => x.CarId == carId).OrderBy(x=>x.RegistrationDateTime).FirstOrDefaultAsync();
+            return await _context.TollRegistrations.Where(x => x.CarId == carId).OrderBy(x => x.RegistrationDateTime).FirstOrDefaultAsync();
         }
     }
 }
