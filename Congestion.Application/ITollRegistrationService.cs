@@ -9,7 +9,7 @@ namespace Congestion.Application
 {
     public interface ITollRegistrationService
     {
-        Task AddTollRegistraion(int cityId, int congestionId, string tag, CancellationToken ct);      
+        Task AddTollRegistraionAsync(int cityId, int congestionId, string tag, CancellationToken ct);      
 
     }
 }

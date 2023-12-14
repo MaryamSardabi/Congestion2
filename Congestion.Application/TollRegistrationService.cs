@@ -11,12 +11,12 @@ namespace Congestion.Application
             _repository = repository;
         }
 
-        public async Task AddTollRegistraion(int cityId, int congestionId, string tag, CancellationToken ct)
+        public async Task AddTollRegistraionAsync(int cityId, int congestionId, string tag, CancellationToken ct)
         {
-            var congestionPlace = await _repository.GetCongestionPlace(cityId, congestionId);
-            var timetoll = await _repository.GetTimeToll(DateTime.Now.TimeOfDay);
-            var today = await _repository.GetCalenderDate(DateTime.Now.Date);
-            var tommorrow = await _repository.GetCalenderDate(DateTime.Now.Date.AddDays(1));
+            var congestionPlace = await _repository.GetCongestionPlaceAsync(cityId, congestionId);
+            var timetoll = await _repository.GetTimeTollAsync(DateTime.Now.TimeOfDay);
+            var today = await _repository.GetCalenderDateAsync(DateTime.Now.Date);
+            var tommorrow = await _repository.GetCalenderDateAsync(DateTime.Now.Date.AddDays(1));
             var car = await _repository.GetCarByTagAsync(tag);
 
             if (car == null)

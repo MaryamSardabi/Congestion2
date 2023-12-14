@@ -12,35 +12,35 @@ namespace Congestion.Infrastructure.Repository
             _context = context;
         }
 
-        public async Task<CarType> GetCarTypeById(int carTypeId)
+        public async Task<CarType> GetCarTypeByIdAsync(int carTypeId)
         {
             return await _context.CarTypes.FirstOrDefaultAsync(x => x.Id == carTypeId);
         }
 
-        public async Task AddCar(Car car)
+        public async Task AddCarAsync(Car car)
         {
             _context.Cars.Add(car);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<City> GetCityById(int cityId)
+        public async Task<City> GetCityByIdAsync(int cityId)
         {
             return await _context.Cities.SingleOrDefaultAsync(x => x.Id == cityId);
 
         }
 
-        public async Task<CongestionPlace> GetCongestionPlace(int cityId, int congestionPlaceId)
+        public async Task<CongestionPlace> GetCongestionPlaceAsync(int cityId, int congestionPlaceId)
         {
             return await _context.CongestionPlaces.SingleOrDefaultAsync(x => x.CityId == cityId && x.Id == congestionPlaceId);
         }
 
-        public async Task<Calender> GetCalenderDate(DateTime calenderDate)
+        public async Task<Calender> GetCalenderDateAsync(DateTime calenderDate)
         {
             return await _context.Calenders.SingleOrDefaultAsync(x => x.Date.Date == calenderDate.Date);
     
         }
 
-        public async Task<TimeToll> GetTimeToll(TimeSpan timeSpan)
+        public async Task<TimeToll> GetTimeTollAsync(TimeSpan timeSpan)
         {
             return await _context.TimeTolls.FirstOrDefaultAsync(x => x.StartTime < timeSpan && x.EndTime > timeSpan);
         }

@@ -4,12 +4,12 @@ namespace Congestion.Infrastructure.Repository
 {
     public interface ICongestionRepository
     {
-        Task<CarType> GetCarTypeById(int carType);
-        Task AddCar(Car car);
-        Task<City> GetCityById(int cityId);
-        Task<CongestionPlace> GetCongestionPlace(int cityId, int congestionPlaceId);
-        Task<Calender> GetCalenderDate(DateTime calenderDate);
-        Task<TimeToll> GetTimeToll(TimeSpan timeSpan);
+        Task<CarType> GetCarTypeByIdAsync(int carType);
+        Task AddCarAsync(Car car);
+        Task<City> GetCityByIdAsync(int cityId);
+        Task<CongestionPlace> GetCongestionPlaceAsync(int cityId, int congestionPlaceId);
+        Task<Calender> GetCalenderDateAsync(DateTime calenderDate);
+        Task<TimeToll> GetTimeTollAsync(TimeSpan timeSpan);
         Task<Car> GetCarByTagAsync(string tag);
         Task AddTollRegistrationAsync(TollRegistration tollRegistration);
         Task<TollRegistration> GetLastTollRegistrationAsync(int carId);

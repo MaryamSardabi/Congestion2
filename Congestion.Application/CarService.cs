@@ -13,11 +13,11 @@ namespace Congestion.Application
 
         public async Task AddCarAsync(string tag, int carTypeId, CancellationToken ct)
         {
-            var carType = await _repository.GetCarTypeById(carTypeId);
+            var carType = await _repository.GetCarTypeByIdAsync(carTypeId);
             if (carType == null) throw new Exception("carTypeType is not valid");
 
             var car = new Car(tag, carType);          
-            await _repository.AddCar(car);
+            await _repository.AddCarAsync(car);
 
         }
 
