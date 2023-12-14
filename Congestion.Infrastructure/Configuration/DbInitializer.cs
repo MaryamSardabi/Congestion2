@@ -53,13 +53,28 @@ namespace Congestion.Infrastructure.Configuration
             {
                 dbContext.Calenders.FromSqlRaw("SET IDENTITY_INSERT [dbo].[Calender] ON");
                 dbContext.Calenders.AddRange(
-                new Calender() { Date = new DateTime(2013, 01, 01), IsHoliday = true, IsTollFree = true },
-                new Calender() { Date = new DateTime(2013, 01, 02), IsHoliday = false, IsTollFree = true },
-                new Calender() { Date = new DateTime(2013, 01, 03), IsHoliday = true, IsTollFree = false },
-                new Calender() { Date = new DateTime(2013, 01, 04), IsHoliday = false, IsTollFree = false },
-                new Calender() { Date = new DateTime(2013, 01, 05), IsHoliday = false, IsTollFree = false },
-                new Calender() { Date = new DateTime(2013, 01, 06), IsHoliday = false, IsTollFree = false },
-                new Calender() { Date = new DateTime(2013, 01, 07), IsHoliday = false, IsTollFree = false });
+                new Calender() { Date = new DateTime(2013, 12, 01), IsHoliday = true, IsTollFree = true },
+                new Calender() { Date = new DateTime(2013, 12, 02), IsHoliday = false, IsTollFree = true },
+                new Calender() { Date = new DateTime(2013, 12, 03), IsHoliday = true, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 04), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 05), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 06), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 07), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 08), IsHoliday = true, IsTollFree = true },
+                new Calender() { Date = new DateTime(2013, 12, 09), IsHoliday = false, IsTollFree = true },
+                new Calender() { Date = new DateTime(2013, 12, 10), IsHoliday = true, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 11), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 12), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 13), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 14), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 15), IsHoliday = true, IsTollFree = true },
+                new Calender() { Date = new DateTime(2013, 12, 16), IsHoliday = false, IsTollFree = true },
+                new Calender() { Date = new DateTime(2013, 12, 17), IsHoliday = true, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 18), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 19), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 20), IsHoliday = false, IsTollFree = false },
+                new Calender() { Date = new DateTime(2013, 12, 21), IsHoliday = false, IsTollFree = false });
+              
             }
 
 
