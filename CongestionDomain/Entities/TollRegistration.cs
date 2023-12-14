@@ -22,7 +22,7 @@
         public int Id { get; private set; }
         public decimal TotalTollAmount { get; private set; }
         public decimal PaidTollAmount { get; private set; }
-        public DateTime RegistrationDateTime { get; set; }
+        public DateTime RegistrationDateTime { get; private set; }
 
         public int CarId { get; private set; }
         public Car Car { get; private set; }

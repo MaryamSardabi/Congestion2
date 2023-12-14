@@ -14,7 +14,7 @@ namespace Congestion.Infrastructure.Repository
 
         public async Task<CarType> GetCarTypeById(int carTypeId)
         {
-            return await _context.CarTypes.Where(x => x.Id == carTypeId).FirstOrDefaultAsync();
+            return await _context.CarTypes.FirstOrDefaultAsync(x => x.Id == carTypeId);
         }
 
         public async Task AddCar(Car car)
@@ -25,23 +25,23 @@ namespace Congestion.Infrastructure.Repository
 
         public async Task<City> GetCityById(int cityId)
         {
-            return await _context.Cities.Where(x => x.Id == cityId).FirstOrDefaultAsync();
+            return await _context.Cities.FirstOrDefaultAsync(x => x.Id == cityId);
 
         }
 
         public async Task<CongestionPlace> GetCongestionPlace(int cityId, int congestionPlaceId)
         {
-            return await _context.CongestionPlaces.Where(x => x.CityId == cityId && x.Id == congestionPlaceId).FirstOrDefaultAsync();
+            return await _context.CongestionPlaces.FirstOrDefaultAsync(x => x.CityId == cityId && x.Id == congestionPlaceId);
         }
 
         public async Task<Calender> GetCalenderDate(DateTime calenderDate)
         {
-            return await _context.Calenders.Where(x => x.Date == calenderDate).SingleOrDefaultAsync();
+            return await _context.Calenders.SingleOrDefaultAsync(x => x.Date == calenderDate.Date);
         }
 
         public async Task<TimeToll> GetTimeToll(TimeSpan timeSpan)
         {
-            return await _context.TimeTolls.Where(x => x.StartTime > timeSpan && x.EndTime < timeSpan).FirstOrDefaultAsync();
+            return await _context.TimeTolls.FirstOrDefaultAsync(x => x.StartTime > timeSpan && x.EndTime < timeSpan);
         }
 
         public async Task<Car?> GetCarByTagAsync(string tag)
@@ -55,9 +55,9 @@ namespace Congestion.Infrastructure.Repository
             await _context.SaveChangesAsync();
         }
 
-        public Task<TollRegistration> GetById(int tollRegistrationId, CancellationToken cancellationToken)
+        public async Task<TollRegistration> GetLastTollRegistrationAsync(int carId)
         {
-            return _context.TollRegistrations.FirstOrDefaultAsync(o => o.Id == tollRegistrationId, cancellationToken);
+            return await _context.TollRegistrations.Where(x => x.CarId == carId).OrderBy(x=>x.RegistrationDateTime).FirstOrDefaultAsync();
         }
     }
 }

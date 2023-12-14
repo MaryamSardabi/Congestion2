@@ -14,13 +14,44 @@ namespace Congestion.Application
         public async Task AddTollRegistraion(int cityId, int congestionId, string tag, CancellationToken ct)
         {
             var congestionPlace = await _repository.GetCongestionPlace(cityId, congestionId);
-            var calender = await _repository.GetCalenderDate(DateTime.Now.Date);
             var timetoll = await _repository.GetTimeToll(DateTime.Now.TimeOfDay);
+
+            var today = await _repository.GetCalenderDate(DateTime.Now.Date);
+
+            var tommorrow = await _repository.GetCalenderDate(DateTime.Now.Date.AddDays(1));
+
             var car = await _repository.GetCarByTagAsync(tag);
-            var tollRegistration = new TollRegistration(car, timetoll, congestionPlace, calender, 100, 100, DateTime.Now);
-            await _repository.AddTollRegistrationAsync(tollRegistration);
+            if (car == null)
+                throw new Exception("register the car first");
+
+            if (car.CarType.IsTollFree)
+                await _repository.AddTollRegistrationAsync(new TollRegistration(car, timetoll, congestionPlace, today, 0, 0, DateTime.Now));
+
+            if (today.IsHoliday || today.IsTollFree || tommorrow.IsHoliday)
+            {
+                await _repository.AddTollRegistrationAsync(new TollRegistration(car, timetoll, congestionPlace, today, timetoll.TollAmount, 0, DateTime.Now));
+            }
+
+            var lastTollRegistration = await _repository.GetLastTollRegistrationAsync(car.Id);
+            if (lastTollRegistration == null)
+                await _repository.AddTollRegistrationAsync(new TollRegistration(car, timetoll, congestionPlace, today, timetoll.TollAmount, timetoll.TollAmount, DateTime.Now));
+            else
+            {
+                var timeDifference = DateTime.Now - lastTollRegistration.RegistrationDateTime;
+                if (timeDifference.Days > 0 || timeDifference.Hours > 0)
+                    await _repository.AddTollRegistrationAsync(new TollRegistration(car, timetoll, congestionPlace, today, timetoll.TollAmount, timetoll.TollAmount, DateTime.Now));
+                else
+                {
+                    var differenceTollAmount = timetoll.TollAmount - lastTollRegistration.PaidTollAmount;
+                    if (differenceTollAmount > 0)
+                        await _repository.AddTollRegistrationAsync(new TollRegistration(car, timetoll, congestionPlace, today, timetoll.TollAmount, differenceTollAmount, DateTime.Now));
+                    else
+                        await _repository.AddTollRegistrationAsync(new TollRegistration(car, timetoll, congestionPlace, today, timetoll.TollAmount, 0, DateTime.Now));
+
+                }
+            }
         }
 
-        
+
     }
 }
