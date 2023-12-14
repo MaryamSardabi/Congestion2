@@ -13,7 +13,7 @@ namespace Congestion.Api.Controllers
         {
             _carService = carService;
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult> AddCar([FromQuery] CarVm request, CancellationToken ct)
         {
             await _carService.AddCarAsync(request.Tag, request.CarTypeId, ct);

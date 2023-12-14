@@ -14,7 +14,7 @@ namespace Congestion.Api.Controllers
             _tollRegistrationService = tollRegistrationService;
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult> AddTollRegistration([FromQuery] TollRegistrationVm request , CancellationToken ct=default)
         {
             await _tollRegistrationService.AddTollRegistraionAsync(request.CityId, request.CongestionId,request.Tag, ct);
