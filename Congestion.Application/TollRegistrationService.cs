@@ -46,9 +46,9 @@ namespace Congestion.Application
                     await _repository.AddTollRegistrationAsync(new TollRegistration(car, timetoll, congestionPlace, today, timetoll.TollAmount, timetoll.TollAmount, DateTime.Now));
                 else
                 {
-                    var differenceTollAmount = timetoll.TollAmount - lastTollRegistration.PaidTollAmount;
-                    if (differenceTollAmount > 0)
-                        await _repository.AddTollRegistrationAsync(new TollRegistration(car, timetoll, congestionPlace, today, timetoll.TollAmount, differenceTollAmount, DateTime.Now));
+                    var tollAmountDifference = timetoll.TollAmount - lastTollRegistration.PaidTollAmount;
+                    if (tollAmountDifference > 0)
+                        await _repository.AddTollRegistrationAsync(new TollRegistration(car, timetoll, congestionPlace, today, timetoll.TollAmount, tollAmountDifference, DateTime.Now));
                     else
                         await _repository.AddTollRegistrationAsync(new TollRegistration(car, timetoll, congestionPlace, today, timetoll.TollAmount, 0, DateTime.Now));
 
